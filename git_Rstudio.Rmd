@@ -67,10 +67,17 @@ knitr::include_graphics("img/git_logo.png")
 
 ---
 # Versión de controles a mano vs Git
-
-```{r, echo=FALSE, out.width='65%', fig.align='center'}
+.pull-left[
+```{r, echo=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("img/git_control.png")
 ```
+]
+
+.pull-right[
+```{r, echo=FALSE, out.width='95%', fig.align='center'}
+knitr::include_graphics("img/git_meme.png")
+```
+]
 
 ---
 Con Git cada contribuidor tiene una copia del repositorio central, con todos los archivos y la historia de los cambios por los que han pasado.
@@ -152,6 +159,30 @@ class: chapter-slide
 ---
 # Creación de TOKEN en GitHub
 
+1. Ve a tu perfil de GitHub, dale click a la imagen de perfil (usualmente en la esquina superior derecha), y busca la opción de *settings* ó *configuración* según sea la configuración de idioma que tengas. 
+
+2. Da click a continuación en *Developer settings* ó *Parámetros del desarrollador*. 
+
+3. En la barra lateral izquierda da click en *Tokens de acceso personal*. 
+
+4. Haz click en *Generar un nuevo token*.
+
+
+---
+# Configuración de credenciales
+
+- Algunas instalaciones de Git son muy listas y guardan el username y password, así que no lo tenemos que poner en cada `push`. Pero en las nuevas políticas de GitHub ahora no se usa la password, se usa el **PAT**.
+- Si por algo no está funcionando:
+    - [https://happygitwithr.com/credential-caching.html](https://happygitwithr.com/credential-caching.html)
+    - [https://happygitwithr.com/ssh-keys.html](https://happygitwithr.com/ssh-keys.html)
+    
+Para configurarlo por primera vez:
+
+```{bash eval=FALSE}
+$ git config --global user.name "Erick Cuevas"
+$ git config --global user.email ecuevas@example.com
+```
+
 
 ---
 # Clonar repositorio
@@ -194,10 +225,182 @@ Ahora tenemos que decirle a git que queremos seguir los cambios de ese archivo. 
 ```{bash eval=FALSE}
 git add README.md
 git commit -m "A commit from my local computer"
+git pull
 git push
 ```
 
 ---
+
+```{r, echo=FALSE, out.width='70%', fig.align='center'}
+knitr::include_graphics("img/git-push-and-run.png")
+```
+
+---
+# Usemos el repositorio
+
+- `add` es algo que se hace la primera vez que se usa un archivo. Con la opción `-A` se agregan todos los archivos de un folder.
+- ⚠️ !Piensen bien antes de hacer eso! A veces no queremos todos los archivos en un folder.
+- Usen mensajes **INFORMATIVOS** en los `commits`, puede ser información muy útil en el futuro. 
+
+Verifica si los cambios se subieron a GitHub.
+---
+
+```{r, echo=FALSE, out.width='30%', fig.align='center'}
+knitr::include_graphics("img/git_pull_push.png")
+```
+
+```{bash eval=FALSE}
+git pull
+git push
+```
+
+---
+# Tip de buenas prácticas
+
+⚠️ Recuerda que cuando estes trabajando de manera colectiva, hacer siempre primero un `pull` para actualizar los cambios al repositorio y evitar los conflictos de versiones. Al final veremos un poco de conflicto de versiones. 
+
+```{r, echo=FALSE, out.width='30%', fig.align='center'}
+knitr::include_graphics("img/git_forced.png")
+```
+
+---
+# Conectando RStudio con Git y Github.
+
+```{r,echo=FALSE, out.width='40%', fig.align='center'}
+knitr::include_graphics("img/github_rstudio.png")
+```
+
+Para lo que sigue a continuación, deberías tener esto:
+
+1. Tener una cuenta en GitHub
+2. **R** y **RStudio** actualizados
+3. Git instalado
+4. Saber que desde la terminal puedes hacer **push** y **pull**
+
+---
+# Vamos a RStudio 
+
+```{r eval=FALSE}
+usethis::use_git_config(user.name = "YourName", user.email = "your@mail.com")
+```
+
+Para confirgurar nuestra **PAT** en RStudio debemos hacer lo siguiente. Con este comando vamos a acceder al **Enviroment** de R, ⚠️ CUIDA LOS ESPACIOS Y LAS MODIFICACIONES QUE HAGAS AQUÍ!!!
+
+```{r eval=FALSE}
+usethis::edit_r_environ()
+```
+
+Aquí añade la siguiente línea, ⚠️ y asegúrese de que '.Renviron' termine con una nueva línea.
+
+````markdown
+GITHUB_PAT=xxxyyyzzz
+```` 
+---
+# Conectando Git y RStudio
+
+- Hasta ahora todo lo de Git ha sido en línea de comando. **Pero RStudio nos puede ayudar con esto**.
+- Para lograrlo, primero necesitamos que RStudio se conecte con Git.
+
+1. Crea un proyecto en RStudio desde un `repositorio` de Git. `File` > `New Project` > `Version Control` > `Git`. Ahi pega el URL del repositorio `https://github.com/mi_usuario/mi_repositorio.git`. Da click en Create Project.
+2. ¿En dónde vas a guardar ese repositorio? 
+3. Git va a aparecer en la esquina superior.
+4. Hagamos un cambio en el README
+
+---
+# Conectando Git y RStudio
+
+Esto nos generará los siguientes elementos:
+
+- Un directorio nuevo
+- Un repositorio Git enlazado a al repositorio de GitHub
+- Un proyecto en RStudio
+
+Con este procedimiento ya no es necesario preocuparse por configurar controles remotos Git
+y rastrear ramas en la línea de comandos.
+
+---
+# Actividad Individual
+
+- Genera un repositorio con el nombre que desees. Y conéctalo a RStudio. Cerciórate de que el archivo *README* se encuentre en tu nueva carpeta. 
+- Usa la función `usethis::use_r("titulo_de_un_script")` y observa lo que sucede.
+
+---
+# Comentar, pull y push
+
+.pull-left[
+```{r,echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("img/gitrstudio_comment.png")
+```
+]
+
+.pull-right[
+```{r,echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("img/gitrstudio_push.png")
+```
+]
+
+---
+# Commit, pull y push en RStudio
+
+Desde RStudio:
+
+1. Da click en el **Git** tab panel superior derecho. 
+2. Has click en **Staged** para README.md
+3. Da click en **commit**.
+4. Escribe un mensaje útil en **Commit message**.
+5. Click **Commit**.
+6. Click **push**.
+
+---
+# Otra forma de usar RStudio en un repositorio.
+
+1. Clona un repositorio de manera normal desde la terminal. 
+
+```{bash eval=FALSE}
+git clone https://github.com/you/your_repo
+```
+
+2. Busca una carpeta donde tengas un `.Rproj` antigüo o que quieras enlazar a github. 
+
+3. **Y LISTO!!** usa un simple `ctrl` + `c`, ó `mv` ó `click derecho` + `copiar` ó el método que prefieras para mover o copiar archivos. Copia los archivos de tu antigüo proyecto al proyecto nuevo. Solo haz *commit* y *push* y listo, lo que tenía en tu antigüo proyecto ya está enlazado a GitHub. 
+
+---
+# Actividad 
+
+- Usa el código `dir.create("mis_imagenes")` en la consola de tu sesión de RStudio (la que está vinculada a tu repositorio). Ejecuta el siguiente código quitando los `#`:
+
+```{r, eval=FALSE}
+data(MASS::cats)
+# pdf("mis_imagenes/cats_plot.pdf") 
+ggplot(cats, aes(x = Sex)) + 
+    geom_bar(fill = "orange", color = "black") + theme_classic() +
+    xlab("Sexo") + ylab("Número de Gatos") + ggtitle("Gatos")
+# dev.off()
+```
+
+- Comenta y da push a los cambios que realizaste en el repositorio. 
+
+---
+
+# Actividad
+
+Por equipos de 6 personas:
+
+1. Todos clonen un repositorio de GitHub en común. Enlacelo a GitHub y sigan el procedimiento de **RStudio primero y GitHub también** en el Material del libro.  
+
+2. Seleccionen con que datos quieren trabajar por equipo, al correr el siguiente comando les mostrara el nombre de los datos disponibles en R base.
+
+```{r, eval=FALSE}
+data()
+```
+
+---
+# Actividad
+
+3. Creen una carpeta para guardar imagenes. Por persona generen un grafico representativo de su dataset, guardelo en la carpeta de imagenes. Compartan entre el equipo sus creaciones al hacer **commit/pull/push**.  
+
+---
+
 .pull-left[<br><br><br><br><br><br><br>
 .center[
 # ¡Gracias! 
