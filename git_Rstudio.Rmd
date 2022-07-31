@@ -239,7 +239,7 @@ knitr::include_graphics("img/git-push-and-run.png")
 # Usemos el repositorio
 
 - `add` es algo que se hace la primera vez que se usa un archivo. Con la opción `-A` se agregan todos los archivos de un folder.
-- ⚠️ !Piensen bien antes de hacer eso! A veces no queremos todos los archivos en un folder.
+- ⚠️ ¡Piensen bien antes de hacer eso! A veces no queremos todos los archivos en un folder.
 - Usen mensajes **INFORMATIVOS** en los `commits`, puede ser información muy útil en el futuro. 
 
 Verifica si los cambios se subieron a GitHub.
@@ -367,16 +367,9 @@ git clone https://github.com/you/your_repo
 ---
 # Actividad 
 
-- Usa el código `dir.create("mis_imagenes")` en la consola de tu sesión de RStudio (la que está vinculada a tu repositorio). Ejecuta el siguiente código quitando los `#`:
+- Usa el código `dir.create("mis_imagenes")` en la consola de tu sesión de RStudio (la que está vinculada a tu repositorio).
 
-```{r, eval=FALSE}
-data(MASS::cats)
-# pdf("mis_imagenes/cats_plot.pdf") 
-ggplot(cats, aes(x = Sex)) + 
-    geom_bar(fill = "orange", color = "black") + theme_classic() +
-    xlab("Sexo") + ylab("Número de Gatos") + ggtitle("Gatos")
-# dev.off()
-```
+- Descarga cualquier imagen que desees, y guardala en "mis_imagenes".
 
 - Comenta y da push a los cambios que realizaste en el repositorio. 
 
@@ -398,6 +391,51 @@ data()
 # Actividad
 
 3. Creen una carpeta para guardar imagenes. Por persona generen un grafico representativo de su dataset, guardelo en la carpeta de imagenes. Compartan entre el equipo sus creaciones al hacer **commit/pull/push**.  
+
+---
+# Git EXTRA
+
+¿Qué pasó? ¿Qué hacemos ahora?
+
+Ahora ya tienes todo para subir tus cosas a GitHub y documentarlas muy bien.
+
+---
+# Git conceptos 
+
+Repository, diff
+
+```{r,echo=FALSE, out.width='80%', fig.align='center'}
+knitr::include_graphics("img/git_diff.png")
+```
+
+---
+# Conflictos del "Merge"
+
+- A veces, no tan a veces, también, las cosas no salen bien a la primera. **Merge** (fusionar es una de esas cosas)
+- Cuando bajamos un cambio o fusionamos "ramas" esto puede pasar. 
+- Primera regla: NO ENTRAR EN PÁNICO!
+- Revisen el status del repositorio: ¿qué archivo tiene conflicto?
+
+```{r,echo=FALSE, out.width='30%', fig.align='center'}
+knitr::include_graphics("img/git_merge.png")
+```
+
+---
+# Conflictos del "Merge"
+
+Abran ese archivo y busquen los problemas de merge. Es fácil, se ven así:
+
+````markdown
+<<<<<<< HEAD:index.html
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+ please contact us at support@github.com
+</div>
+>>>>>>> issue-5:index.html
+````
+
+Editen esa sección, dejen una versión final. Hagan commit y push. No dejen de aprender Git. 
 
 ---
 
